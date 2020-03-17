@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block override_0 %}
+
+<form class="form-class" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in personform %}
+
+        <p>
+            {{ field.label_tag }}
+            {{ field }}
+
+            {% if field.help_text %}
+
+                <small style="color: black;"> {{ field.help_text }} </small>
+
+            {% endif %}
+
+            {% for error in field.errors %}
+
+                <p style="color: red;"> {{ error }} </p>
+
+            {% endfor %}
+
+        </p>
+
+    {% endfor %}
+
+    <button class="btn btn-outline-primary" type="submit">Join</button>
+
+</form>
+
+<script>
+
+    $(document).ready( function() {
+
+        $("#id_category").hide();
+
+        $("#id_gender").on('change', function(){
+
+            var gender = $("#id_gender").val();
+
+            if(gender == 'Male'){
+
+                $('#id_category').empty();
+                $("#id_category").show();
+
+                var maleCategories = ['Male Category 1', 'Male Category 2', 'Male Category 3'];
+                var length = maleCategories.length;
+
+                var i;
+                for(i=0; i < length; i++){
+                    maleCategory = maleCategories[i];
+                    $('#id_category').append(
+
+                        `
+                        <option value="${maleCategory}">
+                            ${maleCategory}
+                        </option>
+                        `
+
+                    );
+                }
+
+            }
+            else if(gender == 'Female'){
+
+                $('#id_category').empty();
+                $("#id_category").show();
+
+                var femaleCategories = ['Female Category 1', 'Female Category 2', 'Female Category 3'];
+                var length = femaleCategories.length;
+
+                var i;
+                for(i=0; i < length; i++){
+                    femaleCategory = femaleCategories[i];
+                    $('#id_category').append(
+
+                        `
+                        <option value="${femaleCategory}">
+                            ${femaleCategory}
+                        </option>
+                        `
+
+                    );
+                }
+
+            }
+            else{
+
+                $('#id_category').empty();
+
+            }
+
+        });
+
+    });
+
+</script>
+
+<!--<button id="about-btn"> Click Me - I'm Javascript on Speed</button>-->
+
+<!--<p>This is a example</p>-->
+
+<!--<p>This is another example</p>-->
+
+<!--<script>-->
+<!--&lt;!&ndash;    $(document).ready( function() {&ndash;&gt;-->
+
+<!--&lt;!&ndash;        $("#about-btn").click( function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            alert("You clicked the button using JQuery!");&ndash;&gt;-->
+<!--&lt;!&ndash;        });&ndash;&gt;-->
+<!--&lt;!&ndash;    });&ndash;&gt;-->
+
+<!--    $(document).ready( function() {-->
+
+
+<!--        -->
+<!--    });    -->
+
+
+
+<!--</script>-->
+
+{% endblock %}
