@@ -28,5 +28,4 @@ def get_all_choices():
 class Person(models.Model):
     name = models.CharField(max_length=50, unique=True)
     gender = models.CharField(max_length=7, choices=GENDER_CHOICES)
-    # category = models.CharField(max_length=20, choices=[('', ''), ])
     category = models.CharField(max_length=20, choices=get_all_choices())

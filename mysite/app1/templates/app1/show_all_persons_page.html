@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block override_0 %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="search" name="name">
+    <select name="gender">
+        <option></option>
+        <option>Male</option>
+        <option>Female</option>
+    </select>
+
+    <select name="category">
+        <option></option>
+        <option>Male Category 1</option>
+        <option>Male Category 2</option>
+        <option>Male Category 3</option>
+        <option>Female Category 1</option>
+        <option>Female Category 2</option>
+        <option>Female Category 3</option>
+    </select>
+
+    <input type="submit">
+</form>
+
+{% for person in person_page_obj %}
+    <img src="{{ person.picture.url }}" width="240">
+    <h2>
+        {{person.name}}
+        <br>
+        {{person.gender}}
+        <br>
+        {{person.category}}
+        <br>
+    </h2>
+    <br>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if person_page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ person_page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ person_page_obj.number }} of {{ person_page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if person_page_obj.has_next %}
+            <a href="?page={{ person_page_obj.next_page_number }}">next</a>
+            <a href="?page={{ person_page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+<script>
+
+    $(document).ready( function() {
+
+
+
+    });
+
+</script>
+
+
+{% endblock %}
