@@ -30,11 +30,22 @@
 
 </form>
 
+<!--                var maleCategories = ['Male Category 1', 'Male Category 2', 'Male Category 3'];-->
+<!--                var maleCategories = '{{male_categories}}';-->
+<!--                var femaleCategories = ['Female Category 1', 'Female Category 2', 'Female Category 3'];-->
+<!--                var femaleCategories = '{{female_categories}}';-->
+
 <script>
 
     $(document).ready( function() {
 
-        $("#id_category").hide();
+        $("#id_category").empty();
+
+        var maleCategories = JSON.parse('{{ json_male_categories | escapejs }}')
+        var femaleCategories = JSON.parse('{{ json_female_categories | escapejs }}')
+
+        console.log('Male Category = '+maleCategories);
+        console.log('Female Category = '+femaleCategories);
 
         $("#id_gender").on('change', function(){
 
@@ -43,10 +54,10 @@
             if(gender == 'Male'){
 
                 $('#id_category').empty();
-                $("#id_category").show();
 
-                var maleCategories = ['Male Category 1', 'Male Category 2', 'Male Category 3'];
                 var length = maleCategories.length;
+
+                console.log('Length = '+length);
 
                 var i;
                 for(i=0; i < length; i++){
@@ -68,8 +79,9 @@
                 $('#id_category').empty();
                 $("#id_category").show();
 
-                var femaleCategories = ['Female Category 1', 'Female Category 2', 'Female Category 3'];
                 var length = femaleCategories.length;
+
+                console.log('Length = '+length);
 
                 var i;
                 for(i=0; i < length; i++){
@@ -83,6 +95,7 @@
                         `
 
                     );
+
                 }
 
             }

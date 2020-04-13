@@ -7,26 +7,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<form method="post">
-    {% csrf_token %}
-    <input type="search" name="name">
-    <select name="gender">
-        <option></option>
-        <option>Male</option>
-        <option>Female</option>
-    </select>
+{% load app1_extras %}
 
-    <select name="category">
-        <option></option>
-        <option>Male Category 1</option>
-        <option>Male Category 2</option>
-        <option>Male Category 3</option>
-        <option>Female Category 1</option>
-        <option>Female Category 2</option>
-        <option>Female Category 3</option>
-    </select>
+<!--<form>-->
+<!--    {% csrf_token %}-->
+<!--    <input type="search" name="name" id="name-filter">-->
+<!--    <select name="gender" id="gender-filter">-->
+<!--        <option></option>-->
+<!--        <option>Male</option>-->
+<!--        <option>Female</option>-->
+<!--    </select>-->
 
-    <input type="submit">
+<!--    <select name="category" id="category-filter">-->
+<!--        <option></option>-->
+<!--    </select>-->
+
+<!--    <button class="btn btn-primary" type="submit" formmethod="get" name="filter-button" value="pressed">Filter</button>-->
+<!--</form>-->
+<form method="get">
+    {{ filtered_person_list.form.as_p }}
+    <button type="submit">Search</button>
 </form>
 
 {% for person in person_page_obj %}
@@ -42,11 +42,26 @@
     <br>
 {% endfor %}
 
+<!--{% for person in person_page_obj %}-->
+<!--    <img src="{{ person.picture.url }}" width="240">-->
+<!--    <h2>-->
+<!--        {{person.name}}-->
+<!--        <br>-->
+<!--        {{person.gender}}-->
+<!--        <br>-->
+<!--        {{person.category}}-->
+<!--        <br>-->
+<!--    </h2>-->
+<!--    <br>-->
+<!--{% endfor %}-->
+
 <div class="pagination">
     <span class="step-links">
         {% if person_page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ person_page_obj.previous_page_number }}">previous</a>
+<!--            <a href="?page=1">&laquo; first</a>-->
+<!--            <a href="?page={{ person_page_obj.previous_page_number}}">previous</a>-->
+            <a href="{% relative_url 1 'page' request.GET.urlencode %}">&laquo; first</a>
+            <a href="{% relative_url person_page_obj.previous_page_number 'page' request.GET.urlencode %}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -54,22 +69,57 @@
         </span>
 
         {% if person_page_obj.has_next %}
-            <a href="?page={{ person_page_obj.next_page_number }}">next</a>
-            <a href="?page={{ person_page_obj.paginator.num_pages }}">last &raquo;</a>
+<!--            <a href="?page={{ person_page_obj.next_page_number }}">next</a>-->
+<!--            <a href="?page={{ person_page_obj.paginator.num_pages }}">last &raquo;</a>-->
+            <a href="{% relative_url person_page_obj.next_page_number 'page' request.GET.urlencode %}">next</a>
+            <a href="{% relative_url person_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">last &raquo;</a>
         {% endif %}
     </span>
 </div>
 
 
-<script>
+<!--<script>-->
 
-    $(document).ready( function() {
+<!--    $(document).ready( function() {-->
 
+<!--        console.log('START!');-->
+<!--        var maleCategories = JSON.parse('{{ json_male_categories | escapejs }}');-->
+<!--        var femaleCategories = JSON.parse('{{ json_female_categories | escapejs }}');-->
 
+<!--        var i, length;-->
 
-    });
+<!--        length = maleCategories.length;-->
+<!--        console.log('Length = '+length );-->
+<!--        for(i=0; i < length ; i++){-->
+<!--            maleCategory = maleCategories[i];-->
+<!--            $('#category-filter').append(-->
+<!--                `-->
+<!--                <option value="${maleCategory}">-->
+<!--                    ${maleCategory}-->
+<!--                </option>-->
+<!--                `-->
+<!--            );-->
+<!--        }-->
 
-</script>
+<!--        length = femaleCategories.length;-->
+<!--        console.log('Length = '+length );-->
+<!--        for(i=0; i < length ; i++){-->
+<!--            femaleCategory = femaleCategories[i];-->
+<!--            $('#category-filter').append(-->
+<!--                `-->
+<!--                <option value="${femaleCategory}">-->
+<!--                    ${femaleCategory}-->
+<!--                </option>-->
+<!--                `-->
+<!--            );-->
+<!--        }-->
+
+<!--        console.log('Male Category = '+maleCategories);-->
+<!--        console.log('Female Category = '+femaleCategories);-->
+
+<!--    });-->
+
+<!--</script>-->
 
 
 {% endblock %}

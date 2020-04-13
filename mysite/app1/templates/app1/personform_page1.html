@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block override_0 %}
+
+<form class="form-class" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in personform %}
+
+        <p>
+            {{ field.label_tag }}
+            {{ field }}
+
+            {% if field.help_text %}
+
+                <small style="color: black;"> {{ field.help_text }} </small>
+
+            {% endif %}
+
+            {% for error in field.errors %}
+
+                <p style="color: red;"> {{ error }} </p>
+
+            {% endfor %}
+
+        </p>
+
+    {% endfor %}
+
+    <button class="btn btn-outline-primary" type="submit">Join</button>
+
+</form>
+
+<!--                var maleCategories = ['Male Category 1', 'Male Category 2', 'Male Category 3'];-->
+<!--                var maleCategories = '{{male_categories}}';-->
+<!--                var femaleCategories = ['Female Category 1', 'Female Category 2', 'Female Category 3'];-->
+<!--                var femaleCategories = '{{female_categories}}';-->
+
+<script>
+
+    $(document).ready( function() {
+
+        $("#id_job").empty();
+
+        var csJobs = JSON.parse('{{ json_cs_jobs | escapejs }}');
+        var businessJobs = JSON.parse('{{ json_business_jobs | escapejs }}');
+
+        console.log('CS Jobs = '+csJobs);
+        console.log('Business Jobs = '+businessJobs);
+
+        $("#id_subject").on('change', function(){
+
+            var subject = $("#id_subject").val();
+
+            if(subject == 'Computer Science'){
+
+                $('#id_job').empty();
+                $("#id_job").show();
+
+                var length = csJobs.length;
+
+                console.log('Length = '+length);
+
+                var i;
+                for(i=0; i < length; i++){
+                    job = csJobs[i];
+                    $('#id_job').append(
+
+                        `
+                        <option value="${job}">
+                            ${job}
+                        </option>
+                        `
+
+                    );
+                }
+
+            }
+            else if(subject == 'Business'){
+
+                $('#id_job').empty();
+                $("#id_job").show();
+
+                var length = businessJobs.length;
+
+                console.log('Length = '+length);
+
+                var i;
+                for(i=0; i < length; i++){
+                    job = businessJobs[i];
+                    $('#id_job').append(
+
+                        `
+                        <option value="${job}">
+                            ${job}
+                        </option>
+                        `
+
+                    );
+
+                }
+
+            }
+            else{
+
+                $('#id_job').empty();
+
+            }
+
+        });
+
+    });
+
+</script>
+
+<!--<button id="about-btn"> Click Me - I'm Javascript on Speed</button>-->
+
+<!--<p>This is a example</p>-->
+
+<!--<p>This is another example</p>-->
+
+<!--<script>-->
+<!--&lt;!&ndash;    $(document).ready( function() {&ndash;&gt;-->
+
+<!--&lt;!&ndash;        $("#about-btn").click( function(event) {&ndash;&gt;-->
+<!--&lt;!&ndash;            alert("You clicked the button using JQuery!");&ndash;&gt;-->
+<!--&lt;!&ndash;        });&ndash;&gt;-->
+<!--&lt;!&ndash;    });&ndash;&gt;-->
+
+<!--    $(document).ready( function() {-->
+
+
+<!--        -->
+<!--    });    -->
+
+
+
+<!--</script>-->
+
+{% endblock %}
